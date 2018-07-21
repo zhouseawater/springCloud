@@ -1,0 +1,15 @@
+server:
+  port: 50001
+spring:
+  application:
+   ##name必须一样，不然高可用会导致unavailable-replicas
+    name: springCloud-eureka
+eureka:
+  instance:
+    hostname: springCloud-eureka1
+  client:
+    ##这里要覆盖application的设置，不然会读取application文件导致unavailable-replicas
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://springCloud-eureka2:50002/eureka/
