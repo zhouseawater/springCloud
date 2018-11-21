@@ -1,5 +1,5 @@
 server:
-  port: 50009
+  port: 50008
 spring:
   application:
     name: springCloud-mybatisPlus
