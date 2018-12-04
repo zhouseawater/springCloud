@@ -18,4 +18,6 @@ import java.util.Map;
 public interface UserinfoMapper extends BaseMapper<Userinfo> {
 
     List<Map> queryMyItems(Page<Map> mapPage, Map requestParam);
+
+    List<Map> queryUserInfo(Map map);
 }

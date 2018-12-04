@@ -9,4 +9,8 @@
     select u.id,u.age,u.description,i.item_name,i.item_desc from userinfo u
     LEFT JOIN item_info i on u.id = i.user_id
     </select>
+
+    <select id="queryUserInfo" resultType="java.util.Map">
+        select t.username,t.description,t.age,t.createtime from userinfo t
+    </select>
 </mapper>

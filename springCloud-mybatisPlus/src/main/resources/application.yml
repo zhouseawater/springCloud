@@ -6,11 +6,27 @@ spring:
   zipkin:
       base-url: http://localhost:50005
   #  mysql datasource
+  aop:
+    proxy-target-class: true
+    auto: true
   datasource:
-      driver-class-name: com.mysql.jdbc.Driver
-      username: sroot
-      password: 1qaz@WSX
-      url: jdbc:mysql://localhost:3306/springcloud?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    druid:
+      db1:
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/springcloud?useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: sroot
+        password: 1qaz@WSX
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+      db2:
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/db2?useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: sroot
+        password: 1qaz@WSX
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
   jackson :
       date-format: yyyy-MM-dd HH:mm:ss
       time-zone: GMT+8

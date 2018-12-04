@@ -4,7 +4,8 @@ package com.seawater.mybatisPlus.controller;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.seawater.mybatisPlus.entity.Userinfo;
-import com.seawater.mybatisPlus.service.IUserinfoService;
+import com.seawater.mybatisPlus.service.db1.IUserinfoService;
+import com.seawater.mybatisPlus.service.db2.IUserInfoService;
 import com.seawater.mybatisPlus.utils.RequestParamsToMapUtils;
 import com.seawater.mybatisPlus.utils.ResultVo;
 import org.apache.log4j.Logger;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,6 +39,9 @@ public class UserinfoController {
 
     @Autowired
     IUserinfoService iUserinfoService;
+
+    @Autowired
+    IUserInfoService iUserInfoService;
 
 
     /**
@@ -193,6 +198,43 @@ public class UserinfoController {
     }
 
 
+    /**
+     * 查询用户数据
+     * @param request
+     * @param page
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/queryUserInfo")
+    public ResultVo queryUserInfo(HttpServletRequest request,Page page) throws Exception{
+        ResultVo result = new ResultVo();
+        result.setError_no(ResultVo.ErrorCode.SUCCESS);
+        result.setError_info(ResultVo.ErrorMessage.SUCCESS);
+        try{
+
+            Map resultsMap = new HashMap();
+            Map map = new HashMap();
+            List<Map> userInfoFromDb1 = iUserinfoService.queryUserInfo(map);
+            if(null != userInfoFromDb1 && userInfoFromDb1.size()>0){
+                resultsMap.put("db1:",userInfoFromDb1.get(0).get("description"));
+            }
+
+            List<Map> userInfoFromDb2 = iUserInfoService.queryUserInfo(map);
+            if(null != userInfoFromDb2 && userInfoFromDb2.size()>0){
+                resultsMap.put("db2:",userInfoFromDb2.get(0).get("description"));
+            }
+
+            result.setResults(resultsMap);
+
+        }catch (Exception e){
+            result.setError_no(ResultVo.ErrorCode.FAILURE);
+            result.setError_info(ResultVo.ErrorMessage.FAILURE);
+            logger.error("调用接口" + request.getRequestURI() + "出现异常,接口入参:"+ RequestParamsToMapUtils.getParameterStringMap(request)
+                    +"错误信息"+ e.toString());
+        }
+
+        return result;
+    }
 
 
 }
